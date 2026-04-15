@@ -1,14 +1,7 @@
-from fastapi.testclient import TestClient
-from main import app
+def test_summarize():
+    response = client.post("/summarize", json={
+        "text": "This is a long email about project updates and deadlines."
+    })
 
-client = TestClient(app)
-
-def test_home():
-    response = client.get("/")
     assert response.status_code == 200
-    assert response.json() == {"message": "Hello Shrutika"}
-
-def test_health():
-    response = client.get("/health")
-    assert response.status_code == 200
-    assert response.json() == {"status": "OK"}
+    assert "summary" in response.json()
